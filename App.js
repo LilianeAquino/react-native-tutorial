@@ -52,7 +52,8 @@ export default class App extends React.Component {
 
           <NewRepoModal onCancel={() => this.setState({modalVisible: false})}
                         onAdd={this._addRepository} 
-                        visible={ this.state.modalVisible }/>
+                        visible={ this.state.modalVisible }
+                        />
 
       </View>
     );

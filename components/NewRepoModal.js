@@ -38,7 +38,7 @@ export default class NewRepoModal extends Component {
                             
                             <TouchableOpacity 
                                 style={ [styles.button, styles.submitButton ] }
-                                onPress={this.props.onAdd}>
+                                onPress={() => this.props.onAdd(this.state.NewRepoText)}>
 
                                 <text style={ styles.buttonText }>Adicionar</text>
                             </TouchableOpacity>
