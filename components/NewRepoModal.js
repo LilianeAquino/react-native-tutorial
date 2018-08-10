@@ -9,6 +9,10 @@ import { View,
 
 
 export default class NewRepoModal extends Component {
+    state={
+        NewRepoText: '',
+    };
+
     render() {
         return (
             <Modal animationType='fade' transparent={ true } visible={ this.props.visible }>
@@ -20,18 +24,22 @@ export default class NewRepoModal extends Component {
                             autoCapitalize='none'
                             style={ styles.boxInput }
                             underlineColorAndroid='rgba(0,0,0,0)'
-                            placeholder='organização/repositório'                        
+                            placeholder='organização/repositório'  
+                            value={this.state.NewRepoText}
+                            onChangeText={NewRepoText => this.setState({ NewRepoText: NewRepoText })}                      
                         />
                         <View style={ styles.buttonContainer }>
                             <TouchableOpacity 
                                 style={ [styles.button, styles.cancelButton ] }
                                 onPress={this.props.onCancel}>
+
                                 <text style={ styles.buttonText }>Cancelar</text>
                             </TouchableOpacity>
                             
                             <TouchableOpacity 
                                 style={ [styles.button, styles.submitButton ] }
-                                onPress={() => {}}>
+                                onPress={this.props.onAdd}>
+
                                 <text style={ styles.buttonText }>Adicionar</text>
                             </TouchableOpacity>
                         </View>

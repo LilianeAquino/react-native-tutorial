@@ -32,6 +32,10 @@ export default class App extends React.Component {
 
   };
 
+  _addRepository = () => {
+
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -47,7 +51,7 @@ export default class App extends React.Component {
           </ScrollView>
 
           <NewRepoModal onCancel={() => this.setState({modalVisible: false})}
-                        onAdd={} 
+                        onAdd={this._addRepository} 
                         visible={ this.state.modalVisible }/>
 
       </View>
