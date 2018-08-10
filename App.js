@@ -4,6 +4,7 @@ import { StyleSheet,
          View, 
          ScrollView, 
          Platform,
+         AsyncStorage,
          TouchableOpacity
         } from 'react-native';
 import Repo from './components/Repo'
@@ -12,28 +13,35 @@ import NewRepoModal from './components/NewRepoModal'
 export default class App extends React.Component {
   state= {
     modalVisible: false,
-
-    repos: [
-      { 
-        id: 1,
-        thumbnail:'https://i.pinimg.com/originals/63/31/25/6331252a3eabe94dd723647e2ad7c565.png',
-        title: 'Tutorial',
-        author:'LilianeAquino',
-      },
-
-      { 
-        id: 2,
-        thumbnail:'https://i.pinimg.com/originals/63/31/25/6331252a3eabe94dd723647e2ad7c565.png',
-        title: 'ReactNative',
-        author:'LilianeAquino',
-      },
-      
-    ]
+    repos: [],
 
   };
 
-  _addRepository = () => {
+ async componentDidMount(){
+    const repos = JSON.parse(await AsyncStorage.getItem('_@minicurso:repos_'))
+    this.setState({ repos });
+  };
 
+  _addRepository = async(newRepoText) => {
+      const repoCall = await fetch('http://api.github.com/repos/${newRepoText}');
+      const response = await repoCall.json();
+
+      const repository = {
+          id: response.id,
+          thumbnail: response.owner.avatar_url,
+          title: response.name,
+          author: response.owner.login,
+      };
+
+      this.setState({
+          modalVisible: false,
+          repos: [
+            ...this.state.repos,
+            repository,
+          ],
+      });
+
+      await AsyncStorage.setItem('_@minicurso:repos_', JSON.stringify(this.state.repos));
   };
 
   render() {
